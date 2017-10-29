@@ -55,4 +55,9 @@ the bound is too low.
 
 However, there's a special trick that can make the short code also efficient
 
+The idea is that we want to avoid computing the tail of a sequence until
+that tail is needed for the evaluation result, and of course, that might be never.
+
+That idea is implemented in a new class which is called Stream.
+
   */
