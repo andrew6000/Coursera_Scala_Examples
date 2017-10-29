@@ -1,4 +1,4 @@
-
+import scala.annotation.tailrec
 
 def isPrime(n: Int) = List.range(2, n) forall (x => n % x != 0)
 
@@ -22,6 +22,7 @@ and that nthPrime has the usual recursive set up to iterate through the interval
   Feasible, but definitely much archaic and
   less elegant than the simple expression here.
   */
+@tailrec
 def nthPrime(from: Int, to:Int, n:Int):Int = {
 
   if(from >=to) throw new Error("no prime")
@@ -40,8 +41,9 @@ However, the shorter expression also has a serious problem.
 ((1000 to 10000) filter isPrime)(1)
 
 It's is evaluation is very, very inefficient, because what we do here is we
-construct all the prime numbers between 1000 and 10000, only ever to take its
-second element. Presumably there are many more prime numbers between 1000 and 10000.
+construct all the prime numbers between 1000 and 10000, only ever to take its second element.
+
+Presumably there are many more prime numbers between 1000 and 10000.
 
 So you could say, well, Maybe my bound, 10,000, is too high, I should reduce that,
 But without knowing a priori where the prime numbers are,
