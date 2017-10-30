@@ -148,6 +148,13 @@ class Pouring(capacity: Vector[Int]) {
 
      So, the amount is the smaller of the current filling grade of the glass we pour from and the
      free space in the glass in which, into which we pour.
+
+     Now, that we know the amount to pour, the state can be updated straightforwardly.
+
+     So, it's the old state updated at the from glass, where the new value of the from glass is
+     the previous value minus amount.
+
+     And the new value of the to glass is the previous value of the to glass plus the amount.
       */
       val amount = state(from) min (capacity(to) - state(to))
       state updated (from, state(from) - amount) updated (to, state(to)+amount)
@@ -182,5 +189,7 @@ class Pouring(capacity: Vector[Int]) {
     (for (g <- glasses) yield Empty(g)) ++
       (for (g <- glasses) yield Fill(g)) ++
       (for (from <- glasses; to <- glasses if from != to) yield Pour(from, to))
+
+
 
 }
