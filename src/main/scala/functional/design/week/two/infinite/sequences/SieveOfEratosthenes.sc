@@ -10,7 +10,10 @@ One maybe surprising possibility this opens is to define infinite streams.
 
 So, for instance the stream of all integers starting from a given number,
 could be define like this.
+*/
+def from(n: Int): Stream[Int] = n #:: from(n+1)
 
+/*
 It would say, def from of an n equals the stream consisting of n followed by from n
 + one.
 
@@ -18,10 +21,7 @@ And normally, of course, this would be a non-terminating recursive computation
 but because the stream const operator is lazy in its right operands,
 the from n + one here would be actually calculated only if somebody is interested
 in the second element of the stream that's defined here.
-*/
-def from(n: Int): Stream[Int] = n #:: from(n+1)
 
-/*
 So, using from, we can now write infinite streams,
 for instance, the string of all natural number would be from zero
   */
@@ -80,6 +80,9 @@ You could write, from one map times n, as we've seen,
 But you could also write from one filter modular N equals zero.
 
 Both expressions would give you the stream of multiples of N.
+
+val xs = from(1) map (_ * N)
+val ys = from(1) filter (_ % N == 0)
 
   But which of the two expressions generates its results faster?
 Would it be that expression here or the filter down there?
