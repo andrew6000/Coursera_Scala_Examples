@@ -196,6 +196,13 @@ And that's the result of the computation.
 
     1013
 
+
+That was quite tedious to follow that far, but imagine how more tedious it would have
+been if we had to evaluate actually all the prime numbers between 1,000 and 10,000.
+
+Here you could convince yourself that indeed, we never look beyond 1,013,
+all the other prime numbers remain undiscovered and unevaluated in this
+
 */
 
 
