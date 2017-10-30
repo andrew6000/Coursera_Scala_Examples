@@ -31,26 +31,27 @@ Let's start reducing that, and see what happens.
 
 So the first thing that happens here is that we have to expand string range.
 
-    (if (1000 >= 10000) empty // by expanding streamRange
-    else cons(1000, streamRange(1000 + 1, 10000))
-      .filter(isPrime).apply(1)
+if(lo>=hi) Stream.empty
+        else Stream.cons(lo, streamRange(lo+1,hi)).filter(isPrime).apply(1)
 
+*/
 
+    (if (1000 >= 10000) Stream.empty // by expanding streamRange
+    else Stream.cons(1000, streamRange(1000 + 1, 10000))
+      .filter(isPrime).apply(1)) //res1: Any = 1013
+/*
 And here, I've given you the expanded definitions with the actual parameters
 replacing the former ones.
 
 The next thing that happens is that the if, then, else is evaluated.
 So that would give me the cons expression that we see here.
 
-    cons(1000, streamRange(1000 + 1, 10000)) // by evaluating if
-    .filter(isPrime).apply(1)
+*/
 
+val C1  =  Stream.cons(1000, streamRange(1000 + 1, 10000)) // C1: Stream.Cons[Int] = Stream(1000, ?)
+    //.filter(isPrime).apply(1) //res2: Int = 1013
 
-The next thing that happens is that the if, then, else is evaluated.
-So that would give me the cons expression that we see here.
-
-    C1.filter(isPrime).apply(1)
-
+/*
 
 Let's abbreviate this expression with the cons to C1, so what I would have is C1,
 filter is prime, apply, one.
@@ -58,23 +59,30 @@ filter is prime, apply, one.
 The next thing to do is, we need to expand the filter function.
 So, here you see it's definition, and then the rest that needs to be done is apply one on that.
 
+The next thing that happens is that the if, then, else is evaluated.
+So that would give me the cons expression that we see here.
+*/
+   // C1.filter(isPrime).apply(1) //res2: Int = 1013
+
+/*
 I have to evaluate the IF then ELSE, so C1 is definitely not empty, because it's a
 cons, so I would be left with this ELSE part of the first IF here.
+*/
 
     (if (C1.isEmpty) C1 // by expanding filter
-    else if (isPrime(C1.head)) cons(C1.head, C1.tail.filter(isPrime))
+    else if (isPrime(C1.head)) Stream.cons(C1.head, C1.tail.filter(isPrime))
     else C1.tail.filter(isPrime))
-    .apply(1)
+    .apply(1) //res3: Int = 1013
 
-
+/*
 And I have to evaluate the head of the C1, the string, that would give me 1,000,
 because that's the first parameter past two counts. So I'm left with this expression here.
-
-    (if (isPrime(C1.head)) cons(C1.head, C1.tail.filter(isPrime))
+*/
+    (if (isPrime(C1.head)) Stream.cons(C1.head, C1.tail.filter(isPrime))
     else C1.tail.filter(isPrime)) // by eval. if
     .apply(1)
 
-
+/*
 Now the next thing to do is evaluating is prime.
 
 I'll leave that out, because we've done that already, but it's pretty clear that
