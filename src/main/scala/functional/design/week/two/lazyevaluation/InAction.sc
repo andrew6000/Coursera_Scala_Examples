@@ -87,124 +87,126 @@ Now the next thing to do is evaluating is prime.
 
 I'll leave that out, because we've done that already, but it's pretty clear that
 is prime of 1,000 should return false.
-
-    (if (isPrime(1000)) cons(C1.head, C1.tail.filter(isPrime))
+*/
+    (if (isPrime(1000)) Stream.cons(C1.head, C1.tail.filter(isPrime))
     else C1.tail.filter(isPrime)) // by eval. head
     .apply(1)
 
-
+/*
 So I replace the call by false. I evaluate the if which gives me the, this
 expression here.
+*/
 
-    (if (false) cons(C1.head, C1.tail.filter(isPrime)) // by eval. isPrime
+    (if (false) Stream.cons(C1.head, C1.tail.filter(isPrime)) // by eval. isPrime
     else C1.tail.filter(isPrime))
     .apply(1)
 
-
+/*
 And I've evaluated the tail of the C1 constant.
-
+*/
     C1.tail.filter(isPrime).apply(1) // by eval. if
 
-
+/*
 So when I evaluate the tail, that's what I will get. But what I'm left with is the expression
 string range of 1,001, 10,000. And then the same thing as filter is prime.
 
 Apply one. In other words, the same expression I started with, only instead of the 1,000,
 I have the 1,001 here. And that evaluation sequence continues until I hit the first prime number,
 which in this case would be 1,009.
-
+*/
 
     streamRange(1001, 10000) // by eval. tail
     .filter(isPrime).apply(1)
 
-
+/*
 So this expression would expand by a sequence of reduction steps, to finally
 stream range 1,009, 10,000, filter is prime, apply one.
 
 I evaluate stream range again. Is the expression.
 
-Abbreviate  to C2:   cons(1009, streamRange(1009 + 1, 10000))
-                      C2.filter(isPrime).apply(1)
+Abbreviate  to C2:
+*/
+      val C2 =   Stream.cons(1009, streamRange(1009 + 1, 10000))
+        C2.filter(isPrime).apply(1)
 
-
+/*
 And I want to abbreviate that expression to c2.
 So I'm left with c2 filters prime apply one.
+*/
+    Stream.cons(1009, C2.tail.filter(isPrime)).apply(1)
 
-    cons(1009, C2.tail.filter(isPrime)).apply(1)
-
-
+/*
 I evaluate the filter function on c2, and that gives me an, a sequence of
 expressions. Cons 1,009, and then this here, because 1,009 is a prime number,
 so it would be included in the result of filter.
-
-
 
 So we are left with an expression, like this one here, which is an if then else to ask
 whether one equals zero, which is false.
 
 So that would simplify to the second part of the if then else, which you see here.
+*/
+    if (1 == 0) Stream.cons(1009, C2.tail.filter(isPrime)).head // by eval. apply
+    else Stream.cons(1009, C2.tail.filter(isPrime)).tail.apply(0)
 
-    if (1 == 0) cons(1009, C2.tail.filter(isPrime)).head // by eval. apply
-    else cons(1009, C2.tail.filter(isPrime)).tail.apply(0)
-
-
+/*
 Now, what we need to do is we need to evaluate tail.
+*/
+    Stream.cons(1009, C2.tail.filter(isPrime)).tail.apply(0)
 
-    cons(1009, C2.tail.filter(isPrime)).tail.apply(0)
-
-
+/*
 That would in turn, force the express tail part of these, this console.
 So we would get C2 tail at filter is prime, apply zero.
-
+*/
     C2.tail.filter(isPrime).apply(0)
 
-
+/*
 The next thing to calculate, again, is the tail over here.
 So that now would give us the next stream range.
-The Tail part of c2. Again, filter is prime apply zero.
-
+The Tail part of C2. Again, filter is prime apply zero.
 
 So what we see is we again, left with essentially, the expression we started
 with, only now we have. 1,010 here and we have zero here.
 Where we started with 1,000 on the left and one on the right.
-
+*/
     streamRange(1010, 10000).filter(isPrime).apply(0)
 
-
+/*
 So that process would continue until we hit the second prime number, 1,013.
 And now the computation is about to wrap up.
-
+*/
     streamRange(1013, 10000).filter(isPrime).apply(0)
 
 
-So the stream range function would expand as usual.
+/*So the stream range function would expand as usual.*/
+//-- by eval. streamRange
+   val C3 =  Stream.cons(1013, streamRange(1013 + 1, 10000)) // C3: Stream.Cons[Int] = Stream(1013, ?)
+    //.filter(isPrime).apply(0)
 
-    cons(1013, streamRange(1013 + 1, 10000)) // by eval. streamRange
-    .filter(isPrime).apply(0)
-
-
+/*
 We make it a shorthand. Call it C3, for this expression.
 So we, we have C3 filter is prime, apply zero.
-
+*/
     C3.filter(isPrime).apply(0)
 
+/*
 We apply the filter function that would say, well, 1013 is a prime number so let's
 include it in the list. Have the tile expression here.  Apply zero of that.
+*/
 
+    Stream.cons(1013, C3.tail.filter(isPrime)).apply(0)
 
-cons(1013, C3.tail.filter(isPrime)).apply(0)
-
-
+/*
 We apply, evaulate the apply function and that would pull out the first element 1013.
+*/
 
-    cons(1013, C3.tail.filter(isPrime)).apply(0)
+    Stream.cons(1013, C3.tail.filter(isPrime)).apply(0)
 
-
+/*
 And that's the result of the computation.
-
+*/
     1013
 
-
+/*
 That was quite tedious to follow that far, but imagine how more tedious it would have
 been if we had to evaluate actually all the prime numbers between 1,000 and 10,000.
 
