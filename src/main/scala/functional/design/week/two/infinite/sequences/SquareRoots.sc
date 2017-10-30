@@ -54,3 +54,5 @@ So, we have to find the is good enough function as before, and we can then
 
 (sqrtStream(4) filter (isGoodEnough(_, 4))).take(10).toList
 
+
+

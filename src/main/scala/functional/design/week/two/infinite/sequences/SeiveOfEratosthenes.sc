@@ -73,3 +73,35 @@ val primes = sieve(from(2))
 primes.take(100).toList
 
 
+/*So, here's a quiz for you. Consider the following two equivalent ways
+  to define an infinite stream of multiples of a given number N.
+
+You could write, from one map times n, as we've seen,
+But you could also write from one filter modular N equals zero.
+
+Both expressions would give you the stream of multiples of N.
+
+  But which of the two expressions generates its results faster?
+Would it be that expression here or the filter down there?
+*/
+val N = 3
+
+/*
+So, the first expression would produce, first, all the elements of the natural
+  numbers starting from one, and immediately multiply each of these by three.*/
+val xs = from(1) map (_ * N)
+
+
+/*
+The second expression would produce all natural numbers as before.
+
+Then, it would filter these numbers to keep only those that are divisible by
+three.
+
+So, it would keep the filter operations that would now keep every third number in the stream.
+*/
+val ys = from(1) filter (_ % N == 0)
+
+/*So, by that argument, the map operation is more efficient because it doesn't generate
+  unnecessary stream elements that are filtered out afterwards.
+So, my vote goes to answer one*/
