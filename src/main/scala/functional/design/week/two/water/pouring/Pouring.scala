@@ -191,5 +191,107 @@ class Pouring(capacity: Vector[Int]) {
       (for (from <- glasses; to <- glasses if from != to) yield Pour(from, to))
 
 
+ /*
+    So, paths would be sequences of moves. I'm also going to define a class for paths,
+    so I define a path by its history, which is a list of moves.
+
+    And the idea would be that the history is taken in reverse that makes it easier to extend
+    the path with the new moves. So, that means that the last move in the path comes first
+    in that history list.
+  */
+  class Path(history: List[Move]) {
+
+   /*
+    Well, one operation I would be interested in is, what state does it lead to?
+    So, let's define that end state.
+  */
+   //def endState: State = trackState(history)
+
+   /*  And well, that would be a state. How do I define that?
+
+      Well, one way to do it would be by a pattern match over the history list,
+      and that would be a recursive function.
+
+      So, let's try that. So, let's call this, track state of history.
+      And we would have a auxiliary function,
+      Which would be defined by a pattern match over an argument list.
+    */
+   private def trackState(xs: List[Move]): State = xs match {
+
+     case Nil => initialState // If the argument list is Nil, then we return the initial state.
+     /*
+     If it consists of a move and some remainder excess one,
+     Then what we would do is we would track the state of the rest, remaining list.
+      */
+     case move :: xs1 => move change trackState(xs1)
+   }
+       /* Remember, the last move comes first in the list.
+
+    And then, we would apply the first move to change the result of that.
+
+    So, that's simply move, change the result of track state.
+
+    Because track state returns the state, and move is a change method that changes
+    the state to give the new state.
+
+     So, what we have here is we have essentially done a set of changes with moves,
+     where each recursive call is a previous version of the history, until initially
+     when the list is Nil, we return initial state.
+
+     So, what does that remind you of? Well, it's a foldRight.
+
+     So, it's a foldRight where we go through the list, and we combine it each time
+     with the change operator. But we can reformulate it as follows.
+
+     We take the history, we do a foldRight. We state the initial state at the lower right
+     as initial state.
+
+     And our operation is, The one way we take each move from the history and we change
+     each state on the right. And that will do exactly the same thing.
+
+     Now, the new formulation is, without a doubt, much shorter and some would argue
+     more elegant, than the recursive pattern matching solution.
+    */
+       def endState: State = (history foldRight initialState) (_ change _)
+
+       /*
+       So, what else do we need to do on a path? Well, one useful operation is no doubt
+       to extend it with another move.
+
+       And that would just be a new path where the move precedes the history that we have so far.
+      */
+       def extend(move: Move) = new Path(move :: history)
+
+       /*
+       And finally, it's always good to be able to print objects in an intelligible manner
+       so let's define a two-string function. So, to print the path, we want to print its history.
+
+       But you probably want to reverse it first, so first moves first and later moves, later.
+
+       And we want to print it, let's say, with a space between different moves.
+       And finally, it's also good to know where the path leads to, so we are,
+       interested in its end state,
+      */
+       def toString = (history.reverse mkString " ") + "--> " + endState
+   }
+
+   /*
+    Defining the initial path. The initial path then would be the path that contains the empty history.
+   */
+  val initialPath = new Path(Nil)
+
+  def from(paths: Set[Path], explored: Set[State]): Stream[Set[Path]] = {
+    if (paths.isEmpty) Stream.empty
+    else {
+      val more = for {
+        path <- paths
+        next <- moves map path.extend
+        if !(explored contains next.endState)
+      } yield next
+
+      paths #:: from(more, explored ++ (more map (_.endState)))
+    }
+  }
+
 
 }
