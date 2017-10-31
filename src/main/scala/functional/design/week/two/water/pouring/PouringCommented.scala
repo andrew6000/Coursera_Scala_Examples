@@ -314,11 +314,18 @@ case class PouringCommented(capacity: Vector[Int], initialState: Vector[Int]) {
   The idea is we need to generate all the possible new paths. I have the paths in the set as a prefix.
   And from then on further more, evolve the stream.
 
-  NOTEs ON OPTIMIZATIONs:
+  NOTES ON OPTIMIZATIONS:
   So, the idea would be that, in my stream generating function,
   I would have a second set, now a set of states that represent the explored states.
 
       explored: Set[State]
+
+  And I will now restrict my moves to those that don't lead to a state that's
+  already explored.
+  So, what I would write here is, let's say, explored is not allowed to contain
+  the end state of next.
+
+      if !(explored contains next.endState)
 
   Now I still have to fix up some bits that now yield type errors.
 
