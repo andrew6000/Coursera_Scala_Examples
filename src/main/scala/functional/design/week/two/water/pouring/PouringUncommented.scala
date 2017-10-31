@@ -7,6 +7,14 @@ case class PouringUncommented(capacity: Vector[Int], initialState: Vector[Int]){
     def change(state: State): State
   }
 
+  case class Empty(glass: Int) extends Move {
+    def change(state: State) = state updated (glass,0)
+  }
+
+  case class Fill(glass: Int) extends Move{
+    def change(state: State) = state updated (glass,capacity(glass))
+  }
+
   case class Pour(from: Int, to: Int) extends Move {
     def change(state: State) = {
       val amount = state(from) min (capacity(to) - state(to))
@@ -21,11 +29,10 @@ case class PouringUncommented(capacity: Vector[Int], initialState: Vector[Int]){
 
   val glasses = 0 until capacity.length
 
-  val moves = for {
-    from <- glasses
-    to <- glasses
-    if (from != to)
-  } yield Pour(from, to)
+  val moves =
+    (for (g <- glasses) yield Empty(g)) ++
+      (for (g <- glasses) yield Fill(g)) ++
+      (for (from <- glasses; to <- glasses if from != to) yield Pour(from, to)))
 
   val initialPath = new Path(Nil, initialState )
 
