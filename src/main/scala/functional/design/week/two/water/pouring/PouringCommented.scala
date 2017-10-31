@@ -322,10 +322,11 @@ case class PouringCommented(capacity: Vector[Int], initialState: Vector[Int]) {
 
   And I will now restrict my moves to those that don't lead to a state that's
   already explored.
-  So, what I would write here is, let's say, explored is not allowed to contain
-  the end state of next.
 
       if !(explored contains next.endState)
+
+  So, what I would write here is, let's say, explored is not allowed to contain
+  the end state of next.
 
   Now I still have to fix up some bits that now yield type errors.
 
