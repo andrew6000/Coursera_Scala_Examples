@@ -225,6 +225,49 @@ case class PouringCommented(capacity: Vector[Int], initialState: Vector[Int]) {
     And the idea would be that the history is taken in reverse that makes it easier to extend
     the path with the new moves. So, that means that the last move in the path comes first
     in that history list.
+
+    NOTES ON OPTIMIZATIONS:
+
+    Well, one area where we could optimize is the endState method.
+    So, endState gets called a lot, you see, in the, in the exploration
+    of possible solutions.
+
+    And each endState is a foldRight over a complete history.
+    So, a recursive function over the history as paths get longer,
+    and state becomes more and more complicated to compute.
+
+    There again, you could say, well, why recompute the end state of a path?
+    Can't we just restore the end state once and for all in the path and that
+    would avoid the recomputation?
+
+    So, let's try that. So, What I'm going to do is I'm going to put the
+    endState in the path.
+
+      val endState: State
+
+    And because it should be available from the outside,
+    I make it a val parameter, so now I can see it.
+
+    And now, I have to compute a new endState when I compute a new path.
+    So, what would be the endState be of the path that consists of the
+    given move last, and the history before that.
+
+    So, what would be the endState be of the path that
+    consists of the given move last, and the history before that.
+
+    Well, it would be the change effect on the move,
+    on the previous endState.
+
+      def extend(move: Move) = new Path(move :: history, <<<move change endState>>>)
+
+
+    So, that's the new one, where if you add a move to a path,
+    then we add the new endState that consists of the change effect of the
+    move on that endState.
+
+    And the initial path then would be, The endState is the initial state.
+
+        val initialPath = new Path(Nil, initialState)
   */
   class Path(history: List[Move], val endState: State) {
 
@@ -442,11 +485,60 @@ We first modeled states, and we modeled moves and the changes
 they have on states. And we generated all the moves in this
 variable here.
 
-Then, we modeled paths as their own class. And finally,
-we modeled the state exploration function from as a for-expression.
+Then, we modeled paths as their own class.
+
+And finally, we modeled the state exploration function from
+as a for-expression.
 
 And the function that picked out all solutions from the
 generated paths as another for-expression.
 
 So, this was quite a complex program.
+
+In particular, there is a lot of choice of representations.
+So, we picked specific classes for moves and paths but we
+could also have taken some encoding.
+
+We picked object-oriented methods. We could also have done
+some naked data structures with functions.
+
+Present elaboration is just one solution not necessarily
+the shortest ones but I believe it's actually quite clear
+from a domain modeling standpoint.
+
+Now, you might ask what are good guiding principles for a
+program like that?
+In the end, it comes down to experience.
+
+As the saying goes, you can learn programming in ten days,
+and then you improve for ten years.
+
+But there are a couple of guidelines anyway, that are useful.
+So, I believe the first guideline is, name everything you can.
+Function programming is great because it allows you to break
+up things in really small pieces, Expressions that consist
+of maybe just three words. Make use of that.
+
+Some of the assignments I've seen have crammed dozen or more
+operators on a single line.
+Taking advantage of the conciseness of functional programming in Scala.
+But I don't actually think that's good style.
+
+So, break things up in little pieces.
+Give a name for each piece,
+that makes programs much more intelligible and readable.
+So, for instance, we put the change method inside the move classes,
+because a move changes things. So, it makes sense to define change
+right where you have the move.
+
+And finally, when you do a design, keep in mind that you always
+want to keep degrees of freedom for future refinements.
+
+So, think of what might change in the future and how you could
+encapsulate this, the implementations from clients so that you
+could change it in the future without changing any of the client code.
+
+
+
+
 */
