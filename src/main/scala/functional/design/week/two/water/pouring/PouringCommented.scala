@@ -1,6 +1,33 @@
 package functional.design.week.two.water.pouring
 
 
+/*
+* NOTES ON OPTIMIZATIONS
+*
+* [In the unoptimized solution]we move blindly.
+*
+* That means we generate from each possible state, Let's say,
+* we have a state here, We generate new states,
+* but we will also generate a lot of old states.
+*
+* So, we do a sort of random walk on the states,
+* constantly revisiting also old states.
+*
+* And these old states don't really bring anything to
+* the solution Because when we go back to an old state,
+* that's not a path we want to consider because we, by definition,
+* there is a shorter path that leads to the same state.
+*
+* So, the problem we have is that all this exploration
+* is rather aimless.
+*
+* And a better way to do it would be to exclude a state
+* that we have visited before.
+*
+* go to from(...) function to see notes on the solution
+*
+* */
+
 /*The final program we are going to develop in this course is the solution
 to a well-known problem called the water-pouring problem.
 
@@ -286,6 +313,30 @@ case class PouringCommented(capacity: Vector[Int], initialState: Vector[Int]) {
 
   The idea is we need to generate all the possible new paths. I have the paths in the set as a prefix.
   And from then on further more, evolve the stream.
+
+  NOTEs ON OPTIMIZATIONs:
+  So, the idea would be that, in my stream generating function,
+  I would have a second set, now a set of states that represent the explored states.
+
+      explored: Set[State]
+
+  Now I still have to fix up some bits that now yield type errors.
+
+  So, the first thing is in the recursive call to from,
+  I have to pass a new explored set, so that would be the old one.
+
+  And also for each of our moves, our path, and also, for each of the
+  paths in more, its end states.
+
+  So, That would be more map end state.
+
+      paths #:: from(more, explored ++ (more map (_.endState)))
+
+  Finally, for the initial call to from, I would have the set of states
+  that's initially explored is just the initial state.
+
+  val pathSets = from(Set(initialPath), <<<<Set(initialState)>>>>  )
+
   */
   def from(paths: Set[Path], explored: Set[State]): Stream[Set[Path]] = {
     if (paths.isEmpty) Stream.empty
