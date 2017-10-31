@@ -434,3 +434,19 @@ case class PouringCommented(capacity: Vector[Int], initialState: Vector[Int]) {
 
 
 }
+
+/*
+So, what we did is, we modeled the problem in a glass pouring.
+
+We first modeled states, and we modeled moves and the changes
+they have on states. And we generated all the moves in this
+variable here.
+
+Then, we modeled paths as their own class. And finally,
+we modeled the state exploration function from as a for-expression.
+
+And the function that picked out all solutions from the
+generated paths as another for-expression.
+
+So, this was quite a complex program.
+*/
