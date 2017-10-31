@@ -74,7 +74,7 @@ exhausted our search space and there is no solution
 */
 
 // A parameter representing all of the glasses and the the capacity of water they can take
-case class Pouring(capacity: Vector[Int], initialState: Vector[Int]) {
+case class PouringCommented(capacity: Vector[Int], initialState: Vector[Int]) {
 
   //States -
   type State = Vector[Int]
@@ -126,7 +126,7 @@ case class Pouring(capacity: Vector[Int], initialState: Vector[Int]) {
    /* Here, our change would be that the glass is updated not to be zero, but to be full to its capacity.
       So, glass gets updated to capacity of glass.
     */
-   def change(state: State) = state updated (glass,0)
+   def change(state: State) = state updated (glass,capacity(glass))
   }
   case class Pour(from: Int, to: Int) extends Move {
 
