@@ -481,13 +481,15 @@ case class PouringCommented(capacity: Vector[Int], initialState: Vector[Int]) {
 /*
 So, what we did is, we modeled the problem in a glass pouring.
 
-We first modeled states, and we modeled moves and the changes
-they have on states. And we generated all the moves in this
-variable here.
+We first modeled states,
+and we modeled moves
+and the changes they have on states.
+
+And we generated all the 'moves' in this variable here
 
 Then, we modeled paths as their own class.
 
-And finally, we modeled the state exploration function from
+And finally, we modeled the state exploration function from(...)
 as a for-expression.
 
 And the function that picked out all solutions from the
@@ -514,8 +516,9 @@ As the saying goes, you can learn programming in ten days,
 and then you improve for ten years.
 
 But there are a couple of guidelines anyway, that are useful.
+
 So, I believe the first guideline is, name everything you can.
-Function programming is great because it allows you to break
+Functional programming is great because it allows you to break
 up things in really small pieces, Expressions that consist
 of maybe just three words. Make use of that.
 
