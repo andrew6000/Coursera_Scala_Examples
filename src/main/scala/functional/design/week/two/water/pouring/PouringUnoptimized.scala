@@ -1,5 +1,34 @@
 package functional.design.week.two.water.pouring
 
+
+/*
+* NOTES ON OPTIMIZATIONS
+*
+* [In the unoptimized solution]we move blindly.
+*
+* That means we generate from each possible state, Let's say,
+* we have a state here, We generate new states,
+* but we will also generate a lot of old states.
+*
+* So, we do a sort of random walk on the states,
+* constantly revisiting also old states.
+*
+* And these old states don't really bring anything to
+* the solution Because when we go back to an old state,
+* that's not a path we want to consider because we, by definition,
+* there is a shorter path that leads to the same state.
+*
+* So, the problem we have is that all this exploration
+* is rather aimless.
+*
+* And a better way to do it would be to exclude a state
+* that we have visited before.
+*
+*
+*
+* */
+
+
 case class PouringUnoptimized(capacity: Vector[Int]){
 
   type State = Vector[Int]
@@ -53,11 +82,11 @@ case class PouringUnoptimized(capacity: Vector[Int]){
 
   val pathSets = from(Set(initialPath))
 
-  def solution(target: State): Stream[Path] = {
+  def solutions(target: Int): Stream[Path] = {
     for {
       pathSet <- pathSets
       path <- pathSet
-      if (path.endState == target)
+      if path.endState contains target
     } yield path
   }
 }

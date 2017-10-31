@@ -32,7 +32,7 @@ case class PouringUncommented(capacity: Vector[Int], initialState: Vector[Int]){
   val moves =
     (for (g <- glasses) yield Empty(g)) ++
       (for (g <- glasses) yield Fill(g)) ++
-      (for (from <- glasses; to <- glasses if from != to) yield Pour(from, to)))
+      (for (from <- glasses; to <- glasses if from != to) yield Pour(from, to))
 
   val initialPath = new Path(Nil, initialState )
 
