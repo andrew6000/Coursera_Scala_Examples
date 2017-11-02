@@ -57,11 +57,6 @@ trait Solver extends GameDef {
 
     neighbors.collect(pf)
   }
-    //neighbors filterNot { case (b, ms) => explored contains b }
-
-    //for((b, ms) <- neighbors if(!(explored contains(b)))) yield((b, ms))
-
-
 
 
   /**
@@ -109,8 +104,13 @@ trait Solver extends GameDef {
    * Returns a stream of all possible pairs of the goal block along
    * with the history how it was reached.
    */
-  lazy val pathsToGoal: Stream[(Block, List[Move])] =
-    for((b, ms) <- pathsFromStart if(done(b))) yield (b, ms)
+  lazy val pathsToGoal: Stream[(Block, List[Move])] = pathsFromStart.collect(pfPathsToGoal)
+
+  lazy val pfPathsToGoal: PartialFunction[(Block, List[Move]), (Block, List[Move])] = {
+
+    case (b,m) if(done(b))  => (b,m)
+  }
+
 
   /**
    * The (or one of the) shortest sequence(s) of moves to reach the
