@@ -84,9 +84,8 @@ object ForQuery {
     }yield a1
   }
    // .distinct //remove duplicate authors
-}
 
-/*
+  /*
   But are we done yet? A question for you. What happens if an author
   has published three books?
 
@@ -124,6 +123,17 @@ object ForQuery {
   you will see that the results at consist again of a set of just a single author,
   like what we wanted.
   */
+
+  /*
+  * Consider this a part of TranslationsOfFor.sc
+  *
+  * It's a flatMap followed by a map of a generator that contains a with filter.
+  * */
+
+  //val titles1 = for(b <- books; a <- b.authors if a startsWith "Aho," ) yield b.title
+  val titles3 = books.flatMap(b => b.authors.withFilter(a => a.startsWith("Aho")).map(y => b.title))
+}
+
 
 
 
