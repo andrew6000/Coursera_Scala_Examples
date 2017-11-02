@@ -5,7 +5,8 @@ object ForQuery {
 
   case class Book( title: String, authors: String*)
 
-  val books: List[Book] = List(
+  //val books = Set( //duplicates are eliminated by design
+  val books = List(
     Book("Structure and Interpretation of Computer Programs", "Abelson, Harold", "Sussman, Gerald J."),
     Book("Principles of Compiler Design", "Aho, Alfred", "Ullman, Jeffrey"),
     Book("Programming in Modula-2", "Wirth, Niklaus"),
@@ -82,7 +83,7 @@ object ForQuery {
       if(a1 == a2) // Author with two books published
     }yield a1
   }
-    .distinct //remove duplicate authors
+   // .distinct //remove duplicate authors
 }
 
 /*
@@ -108,7 +109,20 @@ object ForQuery {
 
   There's a function for this it's called distinct it works on all sequences.
 
+  On the other hand, maybe these problems are a sign that we started off with
+  the wrong data structure.
 
+  Remember that we have written a database as a list of books. I
+
+  n actual databases actually the order in which the rows in which the books appear
+  shouldn't matter.
+
+  So databases are much more sets of rows than lists of rows, and sets have
+  the advantage that duplicates are eliminated by design.
+
+  So let's try this. Let's make books a set of rows, and then yes, indeed,
+  you will see that the results at consist again of a set of just a single author,
+  like what we wanted.
   */
 
 
