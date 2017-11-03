@@ -1,5 +1,38 @@
 
 /*
+Here it turns out that the classical for loop that you'll find
+in C or C++ or Java, cannot be modeled simply by a higher order function.
+
+So if you look at such a for loop, you see the example here, you see
+that there's actually a definition here, that i equals one, that
+introduces a variable that is used later on in the other parts
+of the for loop.
+
+And that's something that cannot be straightforwardly achieved by using
+just higher order function applications. And, as a matter of fact, Scala
+does not have this kind of for loop.
+
+What it has is a kind of for loop that is similar to Java's extended for loop,
+so you would write something that's equivalent to the example up here like this,
+for i ranging over one until three, system out.print i plus space.
+
+And that would display one and two. Now, this looks pretty much like a for expression,
+like the ones you've seen in the functional programming course and also in the first
+week of this course, and in fact that's no accident.
+*/
+
+// Scala does not have this kind of for loop.
+//for(int i=1; i < 3; i=i+1) { System.out.print(i + " ); }
+
+
+for(i <- 1 until 3) { System.out.print(i + " ") }
+
+
+
+
+
+
+/*
 For loops translate quite similarly to for expressions,
 but where for expressions translate into combinations of
 functions, map and flatMaps, for loops translate into
