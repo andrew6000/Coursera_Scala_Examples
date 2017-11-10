@@ -91,8 +91,8 @@ trait Simulation {
 
 
 abstract class Gates extends Simulation {
-  //abstract methods
-  def InverterDelay: Int //units of simulated time.
+  //abstract methods - units of simulated time.
+  def InverterDelay: Int
   def AndGateDelay: Int
   def OrGateDelay: Int
   
@@ -150,6 +150,9 @@ abstract class Gates extends Simulation {
   An Inverter action should be performed every time the input wire changes
   it's signal.
 
+  Add this invert action to the input wire, so that way the wire itself
+  would perform this action every time it's signal changes.
+
   That way, that action would be performed each time the input write changes.
     And what would the action do? Well, it would produce the inverse of the
   input signal, but not immediately but only after a certain delay.*/
@@ -172,24 +175,46 @@ abstract class Gates extends Simulation {
 
     input addAction inverterAction
   }
-  
+
+
+ /* The action of the AND gate  would produce the AND, the conjunction of the input
+    signals of the output wire.
+
+  It would happen after a certain delay, AndGateDelay. So that gives us the following
+    implementation here:
+
+    AND gate takes two inputs and one output.*/
+
   def andGate(in1: Wire, in2: Wire, output: Wire): Unit = {
     def andAction(): Unit = {
+
+      //take the values of the two input signal
       val in1Sig = in1.getSignal
       val in2Sig = in2.getSignal
-      //perform whenever one of the two signal changes
-      afterDelay(AndGateDelay) { output setSignal (in1Sig & in2Sig) }
+
+      /*Performed whenever one of the two signal changes.
+      That way we're sure that whenever one of the two input changes,
+      the output signal would be recomputed.*/
+        afterDelay(AndGateDelay) { output setSignal (in1Sig & in2Sig) }
+
+      /*After AndGateDelay, we set the output to the logical AND of the two values
+      of the input signals.*/
     }
     in1 addAction andAction
     in2 addAction andAction
   }
-  
+
+  /*Implemented quite analogously to the AND gate
+
+    To go to the OR gate we simply change the action
+    in orAction from the logical conjunction to
+    logical disjunction.*/
   def orGate(in1: Wire, in2: Wire, output: Wire): Unit = {
     def orAction(): Unit = {
       val in1Sig = in1.getSignal
       val in2Sig = in2.getSignal
       //perform whenever one of the two signal changes
-      afterDelay(OrGateDelay) { output setSignal (in1Sig | in2Sig) }
+      afterDelay(OrGateDelay) { output setSignal (in1Sig | in2Sig) }//logical disjunction
     }
     in1 addAction orAction
     in2 addAction orAction
