@@ -36,20 +36,48 @@ object test {
     print the current value of the wire.*/
 
 
-  /*To run a simulation that change a single of one of the wires, so,
-    let's say, let's put a one on, in1 and run the simulation*/
     in1 setSignal true
     run()
+  /*To run a simulation that change a single of one of the wires,
+    so, let's say, let's put a one on, in1 and run the simulation
+
+    What we see is the welcome message simulation has started at time 0
+    and at the time 8 new-value of the sum would be true.
+
+    *** simulation started, time = 0 ***
+    sum 8 new-value = true
+
+    The value of the carry has not changed so we don't see anything there.
+    */
 
 
 
 
     in2 setSignal true
     run()
+    /*
+    Placing an input signal on in2 and running the simulation again
+
+    *** simulation started, time = 8 ***
+    carry 11 new-value = true
+    sum 16 new-value = false
 
 
+    simulation has restarted at the time 8,
+    the last time that we saw a signal change earlier
 
+    And now, we see at time 11, the carry signal would
+    get a new value, true.
 
+    And sometimes later at time 16, the sum would be false.
+
+    sum 16 new-value = false
+    */
+
+ /* We can now re-track the signal on in1 and run the simulation a third time.
+
+    And that would give us a time 19 that the new carry value is false and
+    to sum value is again true at some later time.*/
     in1 setSignal false
     run()
 }
