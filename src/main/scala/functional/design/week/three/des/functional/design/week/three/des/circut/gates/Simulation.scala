@@ -208,7 +208,13 @@ abstract class Gates extends Simulation {
 
     To go to the OR gate we simply change the action
     in orAction from the logical conjunction to
-    logical disjunction.*/
+    logical disjunction.
+
+     For orGate, we compute the two signals in1Sig and in2Sig before writing them in value definitions
+
+ We would sample first, then wait orGateDelay time units and then set the output afterwards.
+
+ It does make a big difference whether the signals are computed outside after delay, or inside.*/
   def orGate(in1: Wire, in2: Wire, output: Wire): Unit = {
     def orAction(): Unit = {
       val in1Sig = in1.getSignal
@@ -219,6 +225,27 @@ abstract class Gates extends Simulation {
     in1 addAction orAction
     in2 addAction orAction
   }
+
+  /*'orGate2' does not model OR gates faithfully.
+  *
+  * We compute the two signals in1Sig and in2Sig inline, inside the afterDelay call,
+  * instead of before writing them in value definitions.
+  *
+  * But, the sampling would take place at the time after OR gate delay, and the output
+  * change in the sampling would appear at exactly the same time.
+  *
+  * it does make a big difference whether the signals are computed outside after delay,
+  * or inside and consequently orGate2 does not model OR Gates faithfully.
+  * */
+  def orGate2(in1: Wire, in2: Wire, output: Wire): Unit = {
+    def orAction(): Unit = {
+      afterDelay(OrGateDelay) {
+        output setSignal (in1.getSignal | in2.getSignal) }
+    }
+    in1 addAction orAction
+    in2 addAction orAction
+  }
+
   
   /* In this alternative orGate, the time to stabilize event is longer */
   //a | b == !(!a & !b)
