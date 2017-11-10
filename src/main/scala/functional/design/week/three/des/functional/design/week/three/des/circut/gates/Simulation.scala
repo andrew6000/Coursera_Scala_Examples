@@ -376,3 +376,40 @@ trait Parameters {
   def AndGateDelay = 3
   def OrGateDelay = 5
 }
+
+
+/*
+* SUMMARY
+*
+* It's seen that adding state and assignments makes our mental model of computation
+* more complicated.
+*
+* In particular, we lose the property of referential transparency,
+* which says that it doesn't matter whether we use a name or the thing it refers to.
+*
+* The other thing that we lose is the substitution model so we do not have any more
+* an easy way to trace computations by rewriting.
+*
+* On the other hand, assignments allow us to formulate some programs in an
+* elegant and concise way.
+*
+* We've seen that with the example of discreet event simulation where a system is
+* represented by a list of action and that list was a neutral variable, it changed
+* during the time of simulations.
+*
+* The effect of the actions when they're called would, in turn, change the state of objects.
+* And they could also install other actions to be executed in the future.
+*
+* You've seen that in this way, combining higher functions and assignments in state led to some very,
+  very powerful techniques that let you express fundamentally complex computations in a concise and understandable way.
+
+  In the end, it's a trade-off. You get more expressiveness that helps you tackle certain problems in a simpler way.
+
+  But on the other hand, you lose tools for reasoning about your program preferential transparency into substitution model.
+
+  So, I guess the moral would be that you should stick to the purely function model whenever you can.
+
+  And you should use state responsibly when you must.
+*
+*
+* */
