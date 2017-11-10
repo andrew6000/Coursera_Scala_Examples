@@ -267,7 +267,7 @@ abstract class Gates extends Simulation {
  We would sample first, then wait orGateDelay time units and then set the output afterwards.
 
  It does make a big difference whether the signals are computed outside after delay, or inside.*/
-  def orGateOrig(in1: Wire, in2: Wire, output: Wire): Unit = {
+  def orGate(in1: Wire, in2: Wire, output: Wire): Unit = {
     def orAction(): Unit = {
       val in1Sig = in1.getSignal
       val in2Sig = in2.getSignal
@@ -312,7 +312,7 @@ abstract class Gates extends Simulation {
    *
     * */
   //a | b == !(!a & !b)
-  def orGate(in1: Wire, in2: Wire, output: Wire): Unit = {
+  def orGateAlt(in1: Wire, in2: Wire, output: Wire): Unit = {
     val notIn1, notIn2, notOut = new Wire
     inverter(in1, notIn1)
     inverter(in2, notIn2)
