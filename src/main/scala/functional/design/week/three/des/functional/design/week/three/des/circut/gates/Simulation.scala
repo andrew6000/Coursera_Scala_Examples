@@ -119,15 +119,25 @@ trait Simulation {
     loop()
   }
   
-  //The event handling loop remove successive elements from the agenda and performs
-  //the associated actions
+  /*
+  The event handling loop remove successive elements from the agenda and performs
+  the associated actions.
+
+  Agenda is already time sorted and performed the associated actions.
+  */
   private def loop(): Unit = agenda match {
-    case first :: rest => 
+    /*
+    Performs a pattern match on agenda
+    */
+    case first :: rest => //agenda is non empty, strip off the first item
       agenda = rest
-      curtime = first.time
-      first.action()
-      loop()
-    case Nil => 
+      curtime = first.time//set the current time to the indicated time of that item
+      first.action() //perform the items action
+      loop()  //continue with a recursive call to loop
+    case Nil => //agenda is empty
+      /*
+      then the simulation has ended and the function can accept.
+      */
   }
 }
 
