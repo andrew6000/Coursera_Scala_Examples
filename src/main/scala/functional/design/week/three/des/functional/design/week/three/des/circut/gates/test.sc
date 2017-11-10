@@ -50,9 +50,6 @@ object test {
     The value of the carry has not changed so we don't see anything there.
     */
 
-
-
-
     in2 setSignal true
     run()
     /*
