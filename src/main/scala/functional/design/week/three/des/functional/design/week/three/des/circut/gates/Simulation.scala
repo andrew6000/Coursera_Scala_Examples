@@ -104,8 +104,10 @@ abstract class Gates extends Simulation {
     private var actions: List[Action] = List() 
     
     //returns the current value of signal transported by the wire
+    //'current' means, at the current simulated time.
     def getSignal: Boolean = sigVal
-    
+
+    //modifies the value of the signal that's transported by the wire.
     def setSignal(s: Boolean): Unit = {
       if(s!=sigVal) {
         sigVal = s
@@ -113,7 +115,15 @@ abstract class Gates extends Simulation {
       }
     }
     
-    //Attaches the specific procedures to the actions of the wire
+   /* Attaches the specific procedures to the actions of the wire.
+      Performed every time the signal of a wire changes
+
+     Here the idea would be when the signal of a wire changes,
+     then certain things should happen.
+
+     The things that should happen can be installed so to speak
+     with a call to add action.
+    */
     def addAction(a: Action): Unit = {
       actions = a :: actions
       a()
