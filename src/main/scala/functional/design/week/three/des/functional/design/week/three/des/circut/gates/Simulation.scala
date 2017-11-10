@@ -92,11 +92,14 @@ trait Simulation {
 
 abstract class Gates extends Simulation {
   //abstract methods
-  def InverterDelay: Int
+  def InverterDelay: Int //units of simulated time.
   def AndGateDelay: Int
   def OrGateDelay: Int
   
   class Wire {
+
+    //the state of a wire is modeled by two variables, 'sigVal' and 'actions'
+
     //represents the current val of the current signal from the wire
     private var sigVal = false 
     
@@ -131,16 +134,42 @@ abstract class Gates extends Simulation {
       /*What it also does it turns out to be technically necessary to get the
         simulation off the ground is once we add an action we immediately
         perform it a first time because otherwise it turns out that the
-        simulation would essentially rest in an inert state forever.*/
+        simulation would essentially rest in an inert state forever.
+
+        So we have to perform the action the first time to get things
+        off the ground.
+        */
     }
   }  
   
-  //The Logic Gates
+  //============== The Logic Gates ============================
+
+  /*
+  The inverter is implemented by installing an action on its input wire.
+
+  An Inverter action should be performed every time the input wire changes
+  it's signal.
+
+  That way, that action would be performed each time the input write changes.
+    And what would the action do? Well, it would produce the inverse of the
+  input signal, but not immediately but only after a certain delay.*/
+
+  //takes an input wire and an output wire
   def inverter(input: Wire, output: Wire): Unit = {
+
     def inverterAction(): Unit = {
+
+     /* So, what to invert?  the input wire
+
+      take the signal of the input wire and then we would set the
+      output to the negation of the input signal, but we would do
+      that only after a certain delay.*/
       val inputSig = input.getSignal
       afterDelay(InverterDelay) { output setSignal !inputSig }
+      /*After delay it says, perform this block here, invert the delay time units after the
+      current time.*/
     }
+
     input addAction inverterAction
   }
   
