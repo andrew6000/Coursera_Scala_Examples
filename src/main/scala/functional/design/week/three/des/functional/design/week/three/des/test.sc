@@ -1,3 +1,4 @@
+import functional.design.week.three.des.functional.design.week.three.des
 import functional.design.week.three.des.functional.design.week.three.des.circut.gates.{Circuits, Parameters}
 
 object test {
