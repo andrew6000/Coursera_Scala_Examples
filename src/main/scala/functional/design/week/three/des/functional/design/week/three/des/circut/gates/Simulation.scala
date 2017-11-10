@@ -97,10 +97,11 @@ abstract class Gates extends Simulation {
   def OrGateDelay: Int
   
   class Wire {
-    //represents the current val of the signal
+    //represents the current val of the current signal from the wire
     private var sigVal = false 
     
     //represents the actions attached to the current signal
+    //and to be performed when that signal changes
     private var actions: List[Action] = List() 
     
     //returns the current value of signal transported by the wire
@@ -127,6 +128,10 @@ abstract class Gates extends Simulation {
     def addAction(a: Action): Unit = {
       actions = a :: actions
       a()
+      /*What it also does it turns out to be technically necessary to get the
+        simulation off the ground is once we add an action we immediately
+        perform it a first time because otherwise it turns out that the
+        simulation would essentially rest in an inert state forever.*/
     }
   }  
   
