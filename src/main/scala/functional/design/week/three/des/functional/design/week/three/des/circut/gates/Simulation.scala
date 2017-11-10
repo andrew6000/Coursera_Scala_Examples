@@ -267,7 +267,7 @@ abstract class Gates extends Simulation {
  We would sample first, then wait orGateDelay time units and then set the output afterwards.
 
  It does make a big difference whether the signals are computed outside after delay, or inside.*/
-  def orGate(in1: Wire, in2: Wire, output: Wire): Unit = {
+  def orGateOrig(in1: Wire, in2: Wire, output: Wire): Unit = {
     def orAction(): Unit = {
       val in1Sig = in1.getSignal
       val in2Sig = in2.getSignal
@@ -299,9 +299,20 @@ abstract class Gates extends Simulation {
   }
 
   
-  /* In this alternative orGate, the time to stabilize event is longer */
+  /* In this alternative orGate, the time to stabilize event is longer.
+   *
+   * If we replaced our implementation of orGate by the alternative orGate
+   * that you've just seen, what would happen?
+   *
+   * What you compare to the earlier simulation would you see a change?
+   *
+   * Initially we get some glitches on the sum value. There's some different behavior here.
+   *
+   *
+   *
+    * */
   //a | b == !(!a & !b)
-  def orGateAlt(in1: Wire, in2: Wire, output: Wire): Unit = {
+  def orGate(in1: Wire, in2: Wire, output: Wire): Unit = {
     val notIn1, notIn2, notOut = new Wire
     inverter(in1, notIn1)
     inverter(in2, notIn2)
@@ -309,7 +320,24 @@ abstract class Gates extends Simulation {
     inverter(notOut, output)
   }
   
-  /* Probe is attached to a wire */
+  /*
+  function probe
+
+  A way to examine the changes of the signals on the wires.  Attached to a wire
+
+  Is something that you can attach to a wire. Sort of like an oscillator that
+  tracks a digital signal.
+
+  Takes the form of a component, much like And gate or all the other components
+  in the system.
+
+  name parameter is typically the name of the wire.
+
+  The action parameter consists of printing the name of the wire, the current time, and
+  the new signal on that wire. And what it would do in installation is
+it would add this action to the wire.
+
+  */
   def probe(name: String, wire: Wire): Unit = {
     def probeAction(): Unit = {
       println(s"$name $currentTime new-value = ${wire.getSignal}")
@@ -338,7 +366,11 @@ abstract class Circuits extends Gates {
   }
 }
 
-//fixes the technology specific constants
+  /*
+  A trait Parameters with the delays, and then your actual simulation object would
+  extend the circuits class with Parameters.
+
+  Fixes the technology specific constants*/
 trait Parameters {
   def InverterDelay = 2
   def AndGateDelay = 3
