@@ -308,7 +308,7 @@ abstract class Gates extends Simulation {
    *
    * Initially we get some glitches on the sum value. There's some different behavior here.
    *
-   *
+   * The times are different, and orGateAlt may also produce additional events.
    *
     * */
   //a | b == !(!a & !b)
