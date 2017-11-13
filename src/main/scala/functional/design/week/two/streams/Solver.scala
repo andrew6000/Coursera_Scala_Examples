@@ -112,6 +112,7 @@ trait Solver extends GameDef {
   }
 
 
+
   /**
    * The (or one of the) shortest sequence(s) of moves to reach the
    * goal. If the goal cannot be reached, the empty list is returned.
