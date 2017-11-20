@@ -13,6 +13,7 @@ object Task {
     val tA: A = cA
     (tA, tB.join)
   }
+
   //WRONG - does not compute tasks A and B in parallel
   def parallelWrong[A, B](cA: => A, cB: => B): (A,B) = {
     val tB: B = (task { cB }).join //joined too early
