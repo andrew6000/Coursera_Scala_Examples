@@ -2,13 +2,11 @@ package parallel.programming.week.two
 
 
 
-object MergeSort {
-  // a bit of reflection to access the private sort1 method, which takes an offset and an argument
-
+object MergeSortWithTask {
 
   @volatile var dummy: AnyRef = null
 
-  def parMergeSort(xs: Array[Int], maxDepth: Int): Unit = {
+  def parMergeSortWithTask(xs: Array[Int], maxDepth: Int): Unit = {
     // 1) Allocate a helper array.
     // This step is a bottleneck, and takes:
     // - ~76x less time than a full quickSort without GCs (best time)
@@ -75,23 +73,21 @@ object MergeSort {
     // There is a small potential gain in parallelizing copying.
     // However, most Intel processors have a dual-channel memory controller,
     // so parallel copying has very small performance benefits.
-    def copy(src: Array[Int], target: Array[Int],
-             from: Int, until: Int, depth: Int): Unit = {
+    def copy(src: Array[Int], target: Array[Int], from: Int, until: Int, depth: Int): Unit = {
       if (depth == maxDepth) {
         Array.copy(src, from, target, from, until - from)
       } else {
-        val mid = (from + until) / 2
-        val right = parallel(
-          copy(src, target, mid, until, depth + 1),
-          copy(src, target, from, mid, depth + 1)
-        )
+        val mid = from + ((until - from) / 2)
+        val right = task {
+          copy(src, target, mid, until, depth + 1)
+        }
+        copy(src, target, from, mid, depth + 1)
+        right.join()
       }
     }
-
     if (maxDepth % 2 != 0) {
       copy(ys, xs, 0, xs.length, 0)
     }
   }
-
 
 }
