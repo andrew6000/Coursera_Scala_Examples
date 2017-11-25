@@ -1,7 +1,6 @@
 package parallel.programming.week.two
 
 import org.scalameter._
-import functional.design.week._
 
 object MergeSort {
   // a bit of reflection to access the private sort1 method, which takes an offset and an argument

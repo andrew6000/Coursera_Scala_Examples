@@ -1,10 +1,10 @@
-package parallel.programming
+package parallel.programming.week
 
-import java.util.concurrent._
+import java.util.concurrent.{ForkJoinPool, ForkJoinTask, ForkJoinWorkerThread, RecursiveTask}
 
 import scala.util.DynamicVariable
 
-package object week {
+package object two {
 
   val forkJoinPool = new ForkJoinPool
 
