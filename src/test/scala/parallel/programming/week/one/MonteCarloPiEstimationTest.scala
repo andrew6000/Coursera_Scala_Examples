@@ -16,7 +16,7 @@ object MonteCarloPiEstimationTest {
 
   def main(args: Array[String]): Unit = {
 
-    val iterations = 400000000
+    val iterations = 4000000
     val seqtime = standardConfig measure {
       seqResult = MonteCarloPiEstimation.monteCarloPiSeq(iterations)
     }
