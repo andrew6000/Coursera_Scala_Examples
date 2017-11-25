@@ -1,6 +1,7 @@
-package functional.design
+package parallel.programming
 
 import java.util.concurrent._
+
 import scala.util.DynamicVariable
 
 package object week {
