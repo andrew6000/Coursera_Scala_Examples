@@ -73,17 +73,16 @@ object SumPowersOfArraySegment {
   }
 
 
- /*
-  def segmentRec(a: Array[Int], p: Double, s: Int, t: Int): Int = {
+
+  def segmentRecPar(a: Array[Int], p: Double, s: Int, t: Int): Int = {
     if(t-s < threshold)
       sumSegment(a,p,s,t)
     else {
       val m = s + (t-s)/2
-      val (sum1, sum2) = parallel(segmentRec(a,p,s,m), segmentRec(a,p,m,t))
-
+      val (sum1, sum2) = parallel(segmentRecPar(a,p,s,m), segmentRecPar(a,p,m,t))
       sum1+sum2
     }
-  }*/
+  }
 
   def power(x: Int, p: Double): Int = math.exp(p*math.log(math.abs(x))).toInt
 
