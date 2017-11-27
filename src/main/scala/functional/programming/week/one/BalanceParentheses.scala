@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 
 object BalanceParentheses {
 
- def balance1(chars: Array[Char]): Unit ={
+ def balance1(chars: Array[Char]): Boolean ={
 
    @tailrec
    def balance(chars: Array[Char], count:Int = 0): Boolean = (chars, count) match {

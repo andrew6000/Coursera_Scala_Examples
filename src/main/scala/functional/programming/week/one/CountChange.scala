@@ -1,5 +1,7 @@
 package functional.programming.week.one
 
+import scala.collection.mutable.ListBuffer
+
 
 object CountChange {
 
@@ -43,6 +45,13 @@ object CountChange {
     }
 
     cc(amount, 5)
+  }
+
+  def countChange2(money: Int, coins: List[Int]): Int = (money, coins) match {
+    case (0, _) => 1
+    case (m, _) if m < 0 => 0
+    case (_, cs)  if cs.isEmpty => 0
+    case (m, cs) => countChange2(m - cs.head, cs) + countChange2(m, cs.tail)
   }
 
 
