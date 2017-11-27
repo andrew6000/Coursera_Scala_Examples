@@ -18,7 +18,16 @@ object CountingChangeBenchmarkTest {
       CountChange.countChange1(1000)
     }
 
+    val timeCountChange2 = standardConfig measure {
+
+      CountChange.countChange2(1000,List(1,5,10,25,50))
+    }
+
+
     println(s"\ncountChange1 time: $timeCountChange1 ms")
+    println(s"\ncountChange2 time: $timeCountChange2 ms")
+    println(s"speedup  (countChange1 vs. countChange2): ${timeCountChange1 / timeCountChange2}\n")
+
   }
 
 
