@@ -1,6 +1,4 @@
-package parallel.programming.week
-
-import parallel.programming.week.two.parallel
+package parallel.programming.week.two
 
 object ParallelArrayReduce {
 
@@ -24,5 +22,7 @@ object ParallelArrayReduce {
       f(a1, a2)
     }
   }
+
+  def reduce[A](a: Array[A], f: (A, A) => A): A = reduceSeg(a, 0, a.length, f)
 
 }
