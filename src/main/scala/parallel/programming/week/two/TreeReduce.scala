@@ -13,6 +13,14 @@ object TreeReduce {
     case Node(l,r) => f(reduce(l,f), reduce(r, f))
   }
 
+  def parReduce[A](t: Tree[A], f: (A,A) => A): A = t match {
+    case Leaf(v) => v
+    case Node(l,r) => {
+      val (lb, rb) = parallel(parReduce(l, f), parReduce(r,f))
+      f(lb, rb)
+    }
+  }
+
   object Tree {
     def apply[A](v: A): Leaf[A] = new Leaf(v)
     def apply[A](l: Tree[A], r: Tree[A]): Tree[A] = new Node(l, r)
