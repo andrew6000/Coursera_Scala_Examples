@@ -32,6 +32,8 @@ class TreeReduceTest extends FunSuite with BeforeAndAfter {
   }
 
   test("associativity") {
+    //at 14:00 in Week 2 Parallel Fold (Reduce) Operation Video
+
     /*Consequence (Scala): if f : (A,A)=>A is associative, t1:Tree[A] and
       t2:Tree[A] and if toList(t1)==toList(t2), then:
       reduce(t1, f)==reduce(t2, f)*/
