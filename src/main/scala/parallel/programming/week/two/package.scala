@@ -14,6 +14,11 @@ package object two {
     }
   }
 
+  lazy val logE = math.log(math.E)
+  def power(x: Int, p: Double): Int = {
+    math.exp(p * math.log(math.abs(x)) / logE).toInt
+  }
+
   def quickSort(xs: Array[Int], offset: Int, length: Int): Unit = {
     sort1(xs, offset, length)
   }
