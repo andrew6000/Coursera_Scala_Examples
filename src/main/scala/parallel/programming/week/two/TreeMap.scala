@@ -4,6 +4,7 @@ object TreeMap {
 
 
   sealed abstract class Tree[A] { val size: Int }
+
   case class Leaf[A](a: Array[A]) extends Tree[A] {
     override val size = a.size
   }
@@ -22,6 +23,7 @@ object TreeMap {
       }
       Leaf(b)
     }
+
     case Node(l,r) => {
       val (lb,rb) = (mapTreeSeq(l,f),mapTreeSeq(r,f))
       Node(lb, rb)
