@@ -6,8 +6,8 @@ object MappingOverCollectionsBenchmarkTest {
 
   val standardConfig = config(
     Key.exec.minWarmupRuns -> 20,
-    Key.exec.maxWarmupRuns -> 60,
-    Key.exec.benchRuns -> 60,
+    Key.exec.maxWarmupRuns -> 100,
+    Key.exec.benchRuns -> 100,
     Key.verbose -> true
   ) withWarmer(new Warmer.Default)
 
