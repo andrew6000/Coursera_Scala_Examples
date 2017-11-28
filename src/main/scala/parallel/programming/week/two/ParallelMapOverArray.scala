@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 
 object ParallelMapOverArray {
 
-  val threshold = 100                     //> threshold  : Int = 10000
+  val threshold = 1100                     //> threshold  : Int = 10000
 
   def mapASegPar[A,B](inp: Array[A], left: Int, right: Int,
                              f: A => B, out: Array[B]): Unit = {
