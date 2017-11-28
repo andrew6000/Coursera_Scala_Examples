@@ -23,7 +23,6 @@ object TreeMap {
       }
       Leaf(b)
     }
-
     case Node(l,r) => {
       val (lb,rb) = (mapTreeSeq(l,f),mapTreeSeq(r,f))
       Node(lb, rb)
