@@ -1,10 +1,13 @@
 package parallel.programming.week.two
 
+import scala.annotation.tailrec
+
 object ParallelMapOverArray {
 
-  val threshold = 10000                     //> threshold  : Int = 10000
+  val threshold = 100                     //> threshold  : Int = 10000
 
-  def mapASegPar[A,B](inp: Array[A], left: Int, right: Int, f: A => B, out: Array[B]): Unit = {
+  def mapASegPar[A,B](inp: Array[A], left: Int, right: Int,
+                             f: A => B, out: Array[B]): Unit = {
     //Write to out(i) for left <= i <= right - 1
     if(right - left < threshold) {  //Threshold needs to be large enough,
                                     // otherwise we lose efficiency
