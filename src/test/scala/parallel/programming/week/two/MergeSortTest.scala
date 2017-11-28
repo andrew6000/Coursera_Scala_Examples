@@ -1,6 +1,7 @@
 package parallel.programming.week.two
 
 import org.scalameter._
+import parallel.programming.week.one.MergeSort
 
 object MergeSortTest {
 
