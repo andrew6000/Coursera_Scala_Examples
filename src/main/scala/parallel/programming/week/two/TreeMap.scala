@@ -45,5 +45,4 @@ object TreeMap {
       Node(lb, rb)
     }
   }
-
 }
