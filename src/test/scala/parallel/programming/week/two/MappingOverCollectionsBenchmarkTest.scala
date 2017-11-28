@@ -27,19 +27,19 @@ object MappingOverCollectionsBenchmarkTest {
 
   def main(args: Array[String]): Unit = {
 
-    val length = 5000
+    val length = 50000000
     val xs = new Array[Int](length)
     val ls = initializeList(length)
 
-    val timeMapSeq = standardConfig setUp {
+    /*val timeMapSeq = standardConfig setUp {
       _ => val list = initializeList(length)
     } measure {
 
       SequentialMapOverList.mapSeq(ls,f)
-    }
+    }*/
 
     val timeMapASegSeq = standardConfig setUp {
-      _ => val list = initializeList(length)
+      _ => val list = initializeArray(xs)
     } measure {
 
       val out1 = new Array[Int](length)
@@ -47,16 +47,16 @@ object MappingOverCollectionsBenchmarkTest {
     }
 
     val timeMapASegPar = standardConfig setUp {
-      _ => val list = initializeList(length)
+      _ => val list = initializeArray(xs)
     } measure {
 
       val out1 = new Array[Int](length)
       ParallelMapOverArray .mapASegPar(xs, 0, xs.length, f, out1)
     }
 
-    println(s"sequential map over list time: $timeMapSeq  ms")
+    //println(s"sequential map over list time: $timeMapSeq  ms")
     println(s"sequential map over array time: $timeMapASegSeq  ms")
-    println(s"speedup of array vs. list: ${timeMapSeq / timeMapASegSeq}")
+    //println(s"speedup of array vs. list: ${timeMapSeq / timeMapASegSeq}")
 
     println(s"\nparallel map over array time: $timeMapASegPar  ms")
     println(s"speedup of parallel vs. sequentional array mapping: ${timeMapASegSeq / timeMapASegPar}")
