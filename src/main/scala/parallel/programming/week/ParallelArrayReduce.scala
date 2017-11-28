@@ -6,7 +6,8 @@ object ParallelArrayReduce {
 
   val threshold = 10000
 
-  def reduceSeg[A](a: Array[A], left: Int, right: Int,  f: (A, A) => A): A = {
+  def reduceSeg[A](a: Array[A], left: Int, right: Int,
+                                  f: (A, A) => A): A = {
 
     if(right - left < threshold) {
       var res = a(left)
@@ -18,7 +19,8 @@ object ParallelArrayReduce {
       res
     } else {
       val mid = left + (right - left) / 2
-      val (a1, a2) = parallel(reduceSeg(a, left, mid, f), reduceSeg(a, mid, right, f))
+      val (a1, a2) = parallel(reduceSeg(a, left, mid, f),
+                          reduceSeg(a, mid, right, f))
       f(a1, a2)
     }
   }
