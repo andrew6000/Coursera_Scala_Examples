@@ -12,7 +12,7 @@ object ReduceOverImmutableMapBenchmarkTest {
   val standardConfig = config(
     Key.exec.minWarmupRuns -> 30,
     Key.exec.maxWarmupRuns -> 100,
-    Key.exec.benchRuns -> 10000,
+    Key.exec.benchRuns -> 1000,
     Key.verbose -> false
   ) withWarmer(new Warmer.Default)
 
@@ -32,13 +32,13 @@ object ReduceOverImmutableMapBenchmarkTest {
       TreeReduce.reduce(t,fMinus)
     }
 
-   /* val partime = standardConfig measure {
-      t2 = TreeReduce.mapTreePar(t, f)
-    }*/
+    val partime = standardConfig measure {
+      TreeReduce.parReduce(t,fMinus)
+    }
 
     println(s"sequential time: $seqtime ms")
-   /* println(s"parallel time: $partime ms")
-    println(s"speedup time: ${ seqtime/partime}")*/
+    println(s"parallel time: $partime ms")
+    println(s"speedup time: ${ seqtime/partime}")
   }
 
 }
