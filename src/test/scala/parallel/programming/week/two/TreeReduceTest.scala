@@ -23,8 +23,12 @@ class TreeReduceTest extends FunSuite with BeforeAndAfter {
     TreeReduce.Node(TreeReduce.Node(TreeReduce.Leaf(1), TreeReduce.Leaf(3)),TreeReduce.Leaf(8))
   }
 
-  test("map/reduce combined to equal toList") {
+  test("1.) map/reduce combined to equal toList") {
     assert(tree.toList == TreeReduce.reduce(tree.map(List(_)), (a:List[Int],b:List[Int])=> a++b))
+  }
+
+  test("2.) map/reduce combined to equal toList") {
+    assert(tree2.toList == TreeReduce.reduce(tree2.map(List(_)), (a:List[Int],b:List[Int])=> a++b))
   }
 
   test("associativity") {
