@@ -22,8 +22,15 @@ object ParallelArrayReduceBenchmarkTest {
   def main(args: Array[String]): Unit = {
 
     def fPlus = (x: Int, y: Int) => x + y
-    val length = 70000
+    val length = 700000
     val xs = new Array[Int](length)
+
+    val seqtime = standardConfig setUp {
+      _ => val list = initializeArray(xs)
+    } measure {
+
+      ParallelArrayReduce.reduceSeg(xs, 0, xs.length, fPlus)
+    }
 
     val partime = standardConfig setUp {
       _ => val list = initializeArray(xs)
@@ -32,7 +39,9 @@ object ParallelArrayReduceBenchmarkTest {
       ParallelArrayReduce.reduce(xs, fPlus)
     }
 
+    println(s"sequential time: $seqtime ms")
     println(s"parallel time: $partime ms")
+    println(s"speedup: ${seqtime/partime}")
   }
 
 }
