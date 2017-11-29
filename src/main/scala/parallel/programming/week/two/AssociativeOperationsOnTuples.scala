@@ -60,8 +60,12 @@ object AssociativeOperationsOnTuples {
     println(associativeIfCommutative)
     assert(associativeIfCommutative)
 
-    val tripleProof = (f3(f3(x,y), z) == f3(f3(y,z), x) == f3(x, f3(y,z)) )
-    println(tripleProof)
-    assert(tripleProof)
+    val associativeIfCommutative2 = (f3(f3(x,y), z) == f3(f3(y,z), x) /*== f3(x, f3(y,z))*/ )
+    println(associativeIfCommutative2)
+    assert(associativeIfCommutative2)
+
+    val associativeIfCommutative3 = (f3(f3(y,z), x) == f3(x, f3(y,z)))
+    println(associativeIfCommutative3)
+    assert(associativeIfCommutative3)
   }
 }
