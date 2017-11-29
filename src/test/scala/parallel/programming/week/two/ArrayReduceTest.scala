@@ -14,6 +14,7 @@ class ArrayReduceTest extends FunSuite with BeforeAndAfter{
   before {
 
     arr1 = makeArray()
+    arr2 = arr1.reverse
   }
 
   def add(i:Int,j:Int) = {
@@ -33,11 +34,12 @@ class ArrayReduceTest extends FunSuite with BeforeAndAfter{
       map can be combined with reduce to avoid intermediate collections*/
 
     var result = ParallelArrayReduce.reduce(arr1.map(x => power(x,2)),add )
-    val sum = arr1.sum
-    println(result)
-    println(sum)
+    var result2 = ParallelArrayReduce.reduce(arr2.map(x => power(x,2)),add )
 
-    assert(arr1.sum < result)
+    println(result)
+    println(result2)
+
+    assert(result2 === result)
   }
 
 }
