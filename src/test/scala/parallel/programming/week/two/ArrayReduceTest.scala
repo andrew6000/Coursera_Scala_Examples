@@ -27,15 +27,17 @@ class ArrayReduceTest extends FunSuite with BeforeAndAfter{
 
   test("Associativity 1 - using sum array norm") {
 
-
    /* Which combination of operations does sum of powers correspond to?
     reduce(map(a, power(abs(_), p)), _ + _)
     Here + is the associative operation of reduce
       map can be combined with reduce to avoid intermediate collections*/
 
-    println(ParallelArrayReduce.reduce(arr1.map(x => power(x,2)),add ))
-    assert(true)
+    var result = ParallelArrayReduce.reduce(arr1.map(x => power(x,2)),add )
+    val sum = arr1.sum
+    println(result)
+    println(sum)
 
+    assert(arr1.sum < result)
   }
 
 }
