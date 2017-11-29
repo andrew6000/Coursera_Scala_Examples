@@ -19,9 +19,29 @@ class AverageWithReduceTest extends FunSuite with BeforeAndAfter{
      Array.fill(10000)(length).map(scala.util.Random.nextInt)
   }
 
-  test("Scala API vs. handmade implementation"){
+  test("Scala API vs. handmade implementation with two parts"){
 
-    assert(arr1.sum/arr1.length == AverageWithReduce.average(arr1))
+    val api = arr1.sum/arr1.length
+    val one = AverageWithReduce.average(arr1)
+
+    assert(api === one)
+  }
+
+  test("Scala API vs. handmade implementation with one part"){
+
+    val api = arr1.sum/arr1.length
+    val two =  AverageWithReduce.average2(arr1)
+
+    assert(api === two)
+  }
+
+
+  test("handmade implementation with one part vs. two part"){
+
+    val one = AverageWithReduce.average(arr1)
+    val two =  AverageWithReduce.average2(arr1)
+
+    assert(one === two)
   }
 
 }
