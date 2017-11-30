@@ -2,10 +2,6 @@ package parallel.programming.week.two
 
 import org.scalameter._
 
-import scala.runtime.Nothing$
-import scala.xml.Null
-
-
 
 object ScanTreeBenchmarkTest {
 
