@@ -48,7 +48,7 @@ object AssociativeOperationsOnTuples {
     }
 
     println(deepAssociativity)
-    //assert(deepAssociativity)      currently fails
+    assert(deepAssociativity)      
 
     println(basicAssociativity == deepAssociativity)
     assert(basicAssociativity == deepAssociativity)
