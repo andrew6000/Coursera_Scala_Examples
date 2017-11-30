@@ -16,6 +16,14 @@ object ScanTreeBenchmarkTest {
   val plus = (x: Int, y: Int) => x + y
   val threshold = 700
 
+  def initializeArray(xs: Array[Int]) {
+    var i = 0
+    while (i < xs.length) {
+      xs(i) = i % 100
+      i += 1
+    }
+  }
+
   def makeTree(len:Int): PrefixScan.ScanTree[Int] = {
 
     //if (len < threshold){
@@ -29,9 +37,10 @@ object ScanTreeBenchmarkTest {
 
   def main(args: Array[String]): Unit = {
 
-    val alen = 2000
+    val alen = 10000000
     val t = makeTree(alen)
     var t1: PrefixScan.ScanTree[Int] = t
+    val xs = new Array[Int](alen)
 
     var t2: PrefixScan.TreeRes[Int] = PrefixScan.LeafRes(5)
     var t3: PrefixScan.ScanTree[Int] = PrefixScan.ScanLeaf(5)
@@ -57,12 +66,23 @@ object ScanTreeBenchmarkTest {
       t4 = PrefixScan.scanLeft(t1,100, plus)
     }
 
+    val IntermediateTreeScanLeftTime = standardConfig setUp {
+      _ => val list = initializeArray(xs)
+    } measure {
+
+      val out = new Array[Int](alen+1)
+      ArrayReduceIntermediateTree.scanLeft(xs,100,plus,out)
+    }
+
     println(s"sequential time: $seqtime ms")
     println(s"parallel upsweep time: $upSweepTime ms")
     println(s"parallel downsweep time: $DownSweepTime ms")
-    println(s"parallel upsweep time: $ScanLeftTime ms")
+    println(s"parallel scan left time: $ScanLeftTime ms")
+    println(s"parallel intermediate array scan left time: $IntermediateTreeScanLeftTime ms")
 
-    println(t2)
+    println(s"\nscan left: reg vs intermediate speedup: ${ScanLeftTime/IntermediateTreeScanLeftTime}")
+
+    println("\n\n\n"+t2)
     println(t3)
     println(t4)
   }
