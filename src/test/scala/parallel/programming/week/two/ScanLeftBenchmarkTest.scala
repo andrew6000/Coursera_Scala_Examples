@@ -22,7 +22,7 @@ object ScanLeftBenchmarkTest {
   def main(args: Array[String]): Unit = {
 
     def fPlus = (x: Int, y: Int) => x + y
-    val length = 70000
+    val length = 100000
     val xs = new Array[Int](length)
 
     val seqtime = standardConfig setUp {
