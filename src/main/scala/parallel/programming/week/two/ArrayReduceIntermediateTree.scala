@@ -9,7 +9,7 @@ object ArrayReduceIntermediateTree {
                      override val res: A,
                      r: TreeResA[A]) extends TreeResA[A]
 
-  var threshold = 1000
+  var threshold = 10000
 
   def upsweep[A: Manifest](inp: Array[A], from: Int, to: Int,
                  f: (A,A) => A): TreeResA[A] = {
@@ -47,7 +47,7 @@ object ArrayReduceIntermediateTree {
     a
   }
 
-  def scanLeft[A](inp: Array[A],
+  def scanLeft[A: Manifest](inp: Array[A],
                   a0: A, f: (A,A) => A,
                   out: Array[A]) = {
     val t = upsweep(inp, 0, inp.length, f)
