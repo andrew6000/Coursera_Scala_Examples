@@ -12,7 +12,7 @@ object ReduceOverImmutableMapBenchmarkTest {
   val standardConfig = config(
     Key.exec.minWarmupRuns -> 30,
     Key.exec.maxWarmupRuns -> 100,
-    Key.exec.benchRuns -> 1000,
+    Key.exec.benchRuns -> 100,
     Key.verbose -> false
   ) withWarmer(new Warmer.Default)
 
