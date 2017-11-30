@@ -34,9 +34,15 @@ object AssociativeOperationsOnTuples {
     assert(basicAssociativity)
 
     val deepAssociativity = {f(f((x1, x2), (y1, y2)), (z1, z2)) ==
+      f((f1(x1,y1), f2(x2,y2)), (z1,z2)) &&
       f((f1(x1,y1), f2(x2,y2)), (z1,z2)) ==
+        (f1(f1(x1,y1), z1), f2(f2(x2,y2), z2)) &&
+      f((f1(x1,y1), f2(x2,y2)), (z1,z2)) ==
+      (f1(f1(x1,y1), z1), f2(f2(x2,y2), z2)) &&
       (f1(f1(x1,y1), z1), f2(f2(x2,y2), z2)) ==
-      (f1(x1, f1(y1,z1)), f2(x2, f2(y2,z2))) ==
+        (f1(x1, f1(y1,z1)), f2(x2, f2(y2,z2))) &&
+      (f1(f1(x1,y1), z1), f2(f2(x2,y2), z2)) ==
+      (f1(x1, f1(y1,z1)), f2(x2, f2(y2,z2))) &&
       f((x1, x2), (f1(y1,z1), f2(y2,z2))) ==
       f((x1, x2), f((y1,y2), (z1, z2)))
     }
