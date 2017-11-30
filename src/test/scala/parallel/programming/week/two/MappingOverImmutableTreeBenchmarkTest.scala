@@ -5,7 +5,7 @@ import org.scalameter._
 
 object MappingOverImmutableTreeBenchmarkTest {
 
-  val threshold = 10000000
+  val threshold = 2000
 
   lazy val logE = math.log(math.E)
   def power(x: Double, p: Double): Int = {
@@ -32,7 +32,7 @@ object MappingOverImmutableTreeBenchmarkTest {
 
     def f(x: Double) = power(x, p)
 
-    val alen = 2000000
+    val alen = 200000
     val t = makeTree(alen)
     var t1: TreeMap.Tree[Double] = t
     var t2: TreeMap.Tree[Double] = t
