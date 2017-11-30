@@ -21,6 +21,7 @@ testFrameworks += new TestFramework(
 logBuffered := false
 
 libraryDependencies ++= Seq(
+  "net.java.dev.jna" % "jna" % "4.4.0",
   "org.scalacheck" %% "scalacheck" % "1.12.1" % "test",
   "junit" % "junit" % "4.10" % Test,
   "com.storm-enroute" %% "scalameter-core" % "0.6",
