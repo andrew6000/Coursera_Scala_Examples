@@ -3,6 +3,7 @@ package parallel.programming.week.two
 import org.scalameter._
 
 
+
 object ScanTreeBenchmarkTest {
 
   val standardConfig = config(
@@ -15,11 +16,11 @@ object ScanTreeBenchmarkTest {
   val plus = (x: Int, y: Int) => x + y
   val threshold = 700
 
-  def makeTree(len:Int): PrefixScan.Tree[Int] = {
+  def makeTree(len:Int): PrefixScan.ScanTree[Int] = {
 
     //if (len < threshold){
 
-      PrefixScan.Node(PrefixScan.Node(PrefixScan.Leaf(1), PrefixScan.Leaf(3)), PrefixScan.Node(PrefixScan.Leaf(8), PrefixScan.Leaf(50)))
+    PrefixScan.ScanNode(PrefixScan.ScanNode(PrefixScan.ScanLeaf(1), PrefixScan.ScanLeaf(3)), PrefixScan.ScanNode(PrefixScan.ScanLeaf(8), PrefixScan.ScanLeaf(50)))
     /*}else{
 
       PrefixScan.Node(makeTree(len/2), makeTree(len - len/2))
@@ -30,10 +31,11 @@ object ScanTreeBenchmarkTest {
 
     val alen = 2000
     val t = makeTree(alen)
-    var t1: PrefixScan.Tree[Int] = t
+    var t1: PrefixScan.ScanTree[Int] = t
 
     var t2: PrefixScan.TreeRes[Int] = PrefixScan.LeafRes(5)
-    var t3: PrefixScan.Tree[Int] = PrefixScan.Leaf(5)
+    var t3: PrefixScan.ScanTree[Int] = PrefixScan.ScanLeaf(5)
+    var t4: PrefixScan.ScanTree[Int] = PrefixScan.ScanLeaf(5)
 
     val seqtime = standardConfig measure {
 
@@ -50,12 +52,19 @@ object ScanTreeBenchmarkTest {
       t3 = PrefixScan.downsweep(t2, 100,plus)
     }
 
+    val ScanLeftTime = standardConfig measure {
+
+      t4 = PrefixScan.scanLeft(t1,100, plus)
+    }
+
     println(s"sequential time: $seqtime ms")
     println(s"parallel upsweep time: $upSweepTime ms")
     println(s"parallel downsweep time: $DownSweepTime ms")
+    println(s"parallel upsweep time: $ScanLeftTime ms")
 
     println(t2)
     println(t3)
+    println(t4)
   }
 
 }
