@@ -52,7 +52,7 @@ object ScanTreeBenchmarkTest {
 
     println(s"sequential time: $seqtime ms")
     println(s"parallel upsweep time: $upSweepTime ms")
-    println(s"parallel upsweep time: $DownSweepTime ms")
+    println(s"parallel downsweep time: $DownSweepTime ms")
 
     println(t2)
     println(t3)
