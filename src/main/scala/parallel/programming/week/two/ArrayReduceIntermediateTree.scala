@@ -14,7 +14,7 @@ object ArrayReduceIntermediateTree {
   def upsweep[A](inp: Array[A], from: Int, to: Int,
                  f: (A,A) => A): TreeResA[A] = {
     if (to - from < threshold)
-      LeafA(from, to, ParallelArrayReduce.reduceSeg3(inp, from + 1, to, inp(from), f))
+      LeafA(from, to, reduceSeg1(inp, from + 1, to, inp(from), f))
     else {
       val mid = from + (to - from)/2
       val (tL,tR) = parallel(upsweep(inp, from, mid, f),
@@ -23,6 +23,15 @@ object ArrayReduceIntermediateTree {
     }
   }
 
-
+  def reduceSeg1[A](inp: Array[A], left: Int, right: Int,
+                    a0: A, f: (A,A) => A): A = {
+    var a= a0
+    var i= left
+    while (i < right) {
+      a= f(a, inp(i))
+      i= i+1
+    }
+    a
+  }
 
 }
