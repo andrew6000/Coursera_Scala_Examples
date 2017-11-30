@@ -36,4 +36,12 @@ object PrefixScan {
       NodeRes(tL, f(tL.res, tR.res), tR)
     }
   }
+
+  def downsweep[A](t: TreeRes[A], a0: A, f : (A,A) => A): Tree[A] = t match {
+    case LeafRes(a) => Leaf(f(a0, a))
+    case NodeRes(l, _, r) => {
+      val (tL, tR) = parallel(downsweep[A](l, a0, f),
+        downsweep[A](r, f(a0, l.res), f))
+      Node(tL, tR) }
+  }
 }
