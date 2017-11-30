@@ -14,7 +14,7 @@ object ScanTreeBenchmarkTest {
   ) withWarmer(new Warmer.Default)
 
   val plus = (x: Int, y: Int) => x + y
-  val threshold = 700
+  val threshold = 10
 
   def initializeArray(xs: Array[Int]) {
     var i = 0
@@ -26,21 +26,21 @@ object ScanTreeBenchmarkTest {
 
   def makeTree(len:Int): PrefixScan.ScanTree[Int] = {
 
-    //if (len < threshold){
+    if (len < threshold){
 
     PrefixScan.ScanNode(PrefixScan.ScanNode(PrefixScan.ScanLeaf(1), PrefixScan.ScanLeaf(3)), PrefixScan.ScanNode(PrefixScan.ScanLeaf(8), PrefixScan.ScanLeaf(50)))
-    /*}else{
+    }else{
 
-      PrefixScan.Node(makeTree(len/2), makeTree(len - len/2))
-    }*/
+      PrefixScan.ScanNode(makeTree(len/2), makeTree(len - len/2))
+    }
   }
 
   def main(args: Array[String]): Unit = {
 
-    val alen = 10000000
+    val alen = 80
     val t = makeTree(alen)
     var t1: PrefixScan.ScanTree[Int] = t
-    val xs = new Array[Int](alen)
+    val xs = new Array[Int](alen/2)
 
     var t2: PrefixScan.TreeRes[Int] = PrefixScan.LeafRes(5)
     var t3: PrefixScan.ScanTree[Int] = PrefixScan.ScanLeaf(5)
@@ -70,7 +70,7 @@ object ScanTreeBenchmarkTest {
       _ => val list = initializeArray(xs)
     } measure {
 
-      val out = new Array[Int](alen+1)
+      val out = new Array[Int]((alen/2)+1)
       ArrayReduceIntermediateTree.scanLeft(xs,100,plus,out)
     }
 
