@@ -33,8 +33,17 @@ object ScanLeftBenchmarkTest {
       SequentialScanLeft.scanLeftSeq(xs,0,fPlus,out)
     }
 
-    println(s"sequential time: $seqtime ms")
+    val partime = standardConfig setUp {
+      _ => val list = initializeArray(xs)
+    } measure {
 
+      val out = new Array[Int](length+1)
+      ParallelScanLeft.scanLeftViaMapReduce(xs,0,fPlus,out)
+    }
+
+    println(s"sequential time: $seqtime ms")
+    println(s"parallel time: $partime ms")
+    println(s"speedup time: ${ seqtime/partime}")
   }
 
 }
