@@ -82,6 +82,14 @@ object ScanTreeBenchmarkTest {
 
     println(s"\nscan left: reg vs intermediate speedup: ${ScanLeftTime/IntermediateTreeScanLeftTime}")
 
+  /*  sequential time: 0.34372174000000016 ms
+      parallel upsweep time: 0.03533204000000001 ms
+      parallel downsweep time: 0.08952687999999999 ms
+      parallel scan left time: 0.058125659999999975 ms
+      parallel intermediate array scan left time: 0.033692550000000016 ms
+
+      scan left: reg vs intermediate speedup: 1.7251784148127687*/
+
     println("\n\n\n"+t2)
     println(t3)
     println(t4)
