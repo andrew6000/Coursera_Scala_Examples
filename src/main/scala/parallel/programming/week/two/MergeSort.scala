@@ -3,7 +3,43 @@ package parallel.programming.week.two
 
 
 object MergeSort {
-  // a bit of reflection to access the private sort1 method, which takes an offset and an argument
+
+  //https://codereview.stackexchange.com/questions/21575/merge-sort-in-scala
+  //========Sequential Merge sort Start==========================================
+  def seqMergeSort(array:Array[Int]) {
+    if (array.length > 1 ){
+      var firstArrayLength = (array.length/2)
+      var first:Array[Int] = array.slice(0, firstArrayLength)
+      var second:Array[Int] = array.slice(firstArrayLength, array.length)
+      seqMergeSort(first)
+      seqMergeSort(second)
+      merge(array, first, second)
+    }
+  }
+
+  def merge(result:Array[Int], first:Array[Int], second:Array[Int]) {
+    var i:Int = 0
+    var j:Int = 0
+    for (k <- 0 until result.length) {
+      if(i<first.length && j<second.length){
+        if (first(i) < second(j)){
+          result(k) = first(i)
+          i=i+1
+        } else {
+          result(k) = second(j)
+          j=j+1
+        }
+      }else if(i>=first.length && j<second.length){
+        result(k) = second(j)
+        j=j+1
+      } else {
+        result(k) = first(i)
+        i=i+1
+      }
+    }
+  }
+
+  //========Sequential Merge sort End==========================================
 
 
   @volatile var dummy: AnyRef = null
