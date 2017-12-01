@@ -27,7 +27,7 @@ object MappingOverCollectionsBenchmarkTest {
 
   def main(args: Array[String]): Unit = {
 
-    val length = 700000000
+    val length = 1000000
     val xs = new Array[Int](length)
     val ls = initializeList(length)
 
