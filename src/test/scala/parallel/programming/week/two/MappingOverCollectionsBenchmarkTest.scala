@@ -11,7 +11,7 @@ object MappingOverCollectionsBenchmarkTest {
     Key.verbose -> true
   ) withWarmer(new Warmer.Default)
 
-  val f = (x: Int) => x*x
+  def f = (x: Int) => x*x
 
   def initializeArray(xs: Array[Int]) {
     var i = 0
