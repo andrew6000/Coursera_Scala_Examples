@@ -32,7 +32,7 @@ object MappingOverImmutableTreeBenchmarkTest {
 
     def f(x: Double) = power(x, p)
 
-    val alen = 200000
+    val alen = 2000000
     val t = makeTree(alen)
     var t1: TreeMap.Tree[Double] = t
     var t2: TreeMap.Tree[Double] = t
