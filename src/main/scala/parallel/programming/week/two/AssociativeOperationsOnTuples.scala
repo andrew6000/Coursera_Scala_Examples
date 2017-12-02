@@ -3,8 +3,8 @@ package parallel.programming.week.two
 
 object AssociativeOperationsOnTuples {
 
-  type A1 = Double
-  type A2 = Float
+  type A1 = Int
+  type A2 = Int
 
 
   def f1(a: (A1, A1)) = a._1+ a._2
