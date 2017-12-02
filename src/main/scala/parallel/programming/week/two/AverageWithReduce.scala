@@ -15,6 +15,7 @@ object AverageWithReduce {
   def main(args: Array[String]): Unit = {
 
     val arr = Array.fill(100)(100).map(scala.util.Random.nextInt)
+    println(arr.mkString(","))
     println(average(arr))
     println(average2(arr))
   }
