@@ -16,11 +16,13 @@ class TreeReduceTest extends FunSuite with BeforeAndAfter {
   def fPlus = (x: Int, y: Int) => x + y
 
   def makeTree() : TreeReduce.Tree[Int] = {
-    TreeReduce.Node(TreeReduce.Leaf(1), TreeReduce.Node(TreeReduce.Leaf(3), TreeReduce.Leaf(8)))
+    TreeReduce.Node(TreeReduce.Leaf(1),
+              TreeReduce.Node(TreeReduce.Leaf(3), TreeReduce.Leaf(8)))
   }
 
   def makeTree2() : TreeReduce.Tree[Int] = {
-    TreeReduce.Node(TreeReduce.Node(TreeReduce.Leaf(1), TreeReduce.Leaf(3)),TreeReduce.Leaf(8))
+    TreeReduce.Node(TreeReduce.Node(TreeReduce.Leaf(1), TreeReduce.Leaf(3)),
+                                                              TreeReduce.Leaf(8))
   }
 
   test("1.) map/reduce combined to equal toList") {
