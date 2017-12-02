@@ -23,7 +23,7 @@ object PointwiseExponentBenchmarkTest {
 
   def main(args: Array[String]): Unit = {
 
-    val length = 500000
+    val length = 2000000
     val xs = new Array[Int](length)
 
     val timeNormsOf = standardConfig setUp {
