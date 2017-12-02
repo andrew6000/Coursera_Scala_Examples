@@ -6,7 +6,7 @@ object ParallelMapOverArray {
 
   val threshold = 10000                     //> threshold  : Int = 10000
 
-  def mapASegPar[A,B](inp: Array[A], left: Int, right: Int,
+  def mapASegPar[A:Manifest,B:Manifest](inp: Array[A], left: Int, right: Int,
                              f: A => B, out: Array[B]): Unit = {
     //Write to out(i) for left <= i <= right - 1
     if(right - left < threshold) {  //Threshold needs to be large enough,
@@ -18,7 +18,7 @@ object ParallelMapOverArray {
     }
   }
 
-  def mapASegPar2[A,B](inp: Array[A], left: Int, right: Int,
+  def mapASegPar2[A:Manifest,B:Manifest](inp: Array[A], left: Int, right: Int,
                       f: (Int,A) => B, out: Array[B]): Unit = {
     //Write to out(i) for left <= i <= right - 1
     if(right - left < threshold) {  //Threshold needs to be large enough,

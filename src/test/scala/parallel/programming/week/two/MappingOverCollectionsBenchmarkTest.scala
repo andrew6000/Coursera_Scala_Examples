@@ -11,7 +11,7 @@ object MappingOverCollectionsBenchmarkTest {
     Key.verbose -> true
   ) withWarmer(new Warmer.Default)
 
-  val f = (x: Int) => x*x
+  def f = (x: Int) => x*x
 
   def initializeArray(xs: Array[Int]) {
     var i = 0
@@ -27,7 +27,7 @@ object MappingOverCollectionsBenchmarkTest {
 
   def main(args: Array[String]): Unit = {
 
-    val length = 700000000
+    val length = 1000000
     val xs = new Array[Int](length)
     val ls = initializeList(length)
 
