@@ -24,14 +24,6 @@ object FoldBenchmarkTest {
     val length = 2000000
     val xs = new Array[Int](length)
 
-    /*val timeMapASegSeq = standardConfig setUp {
-      _ => val list = initializeArray(xs)
-    } measure {
-
-      val out1 = new Array[Int](length)
-      SequentialMapOverArray.mapASegSeq(xs, 0, xs.length, f, out1)
-    }
-    */
     val foldLeftSeqSumTime = standardConfig setUp {
       _ => initializeArray(xs)
     }measure {
