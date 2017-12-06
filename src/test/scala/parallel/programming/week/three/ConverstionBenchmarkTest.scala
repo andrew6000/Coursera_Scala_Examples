@@ -65,9 +65,16 @@ object ConverstionBenchmarkTest {
 
     val tmap = (TreeMap("map" -> roundBy3(maptime))++rangeMap).toList.sortBy (_._2)
 
-    // val sorted = (tmap.toSeq.sortBy(_._2))
     for ((k,v) <- tmap) println(s"$k, time: $v")
 
+    /*
+    range, time: 0.001
+    vector, time: 0.001
+    map, time: 0.085
+    set, time: 0.112
+    array, time: 73.106
+    list, time: 284.354
+    */
   }
 
 }
