@@ -15,25 +15,50 @@ object ConverstionBenchmarkTest {
 
   val length = 10000000
 
-  val array = (Array.fill(length)(""))
+  val array:Array[String] = (Array.fill(length)(""))
   val list = array.toList
-  val set = array.toSet
+  val set:Set[String] = array.toSet
   val vector = array.toVector
   val range = Range(0,length)
-  val map = array.zip(array.indices).toMap
+  val map:scala.collection.immutable.Map[String,Int] = array.zip(array.indices).toMap
+  val mutableSet:scala.collection.mutable.HashSet[String] = (scala.collection.mutable.HashSet()++array)
+  val mutableMap:scala.collection.mutable.Map[String,Int] = scala.collection.mutable.Map()++map
+  val trieMap  = makeTrieMap(array)
 
   def roundBy3(n:Double)= BigDecimal(n).setScale(3, BigDecimal.RoundingMode.HALF_UP).toDouble
 
-
+  def makeTrieMap(array:Array[String]): scala.collection.concurrent.TrieMap[String,Int] ={
+    val ct = new scala.collection.concurrent.TrieMap[String, Int]
+    for (i <- 0 until array.length) ct.put(""+i, i)
+    ct
+  }
 
   def main(args: Array[String]) {
+
+    val trieMapTime = standardConfig measure {
+      trieMap.par
+    }
+
+    val trieMapTMap:Map[String,Double] = TreeMap("trie map" -> roundBy3(trieMapTime))
+
+    val mutableMapTime = standardConfig measure {
+      mutableMap.par
+    }
+
+    val mutableTMap:Map[String,Double] = TreeMap("mutable map" -> roundBy3(mutableMapTime))++trieMapTMap
+
+    val mutableSetTime = standardConfig measure {
+      mutableSet.par
+    }
+
+    val mutableSetMap:Map[String,Double] = TreeMap("mutable set" -> roundBy3(mutableSetTime))++mutableTMap
 
 
     val listtime = standardConfig measure {
       list.par
     }
 
-    val listMap:Map[String,Double] = TreeMap("list" -> roundBy3(listtime))
+    val listMap:Map[String,Double] = TreeMap("list" -> roundBy3(listtime))++mutableSetMap
 
     val arraytime = standardConfig measure {
       array.par
@@ -69,12 +94,16 @@ object ConverstionBenchmarkTest {
 
     /*
     range, time: 0.001
-    vector, time: 0.001
-    map, time: 0.085
-    set, time: 0.112
-    array, time: 73.106
-    list, time: 284.354
+    trie map, time: 0.002
+    vector, time: 0.002
+    mutable map, time: 0.007
+    mutable set, time: 0.017
+    set, time: 0.092
+    map, time: 0.11
+    array, time: 6.422
+    list, time: 148.587
     */
+    println("\ntrieMap.size: "+trieMap.size)
   }
 
 }
